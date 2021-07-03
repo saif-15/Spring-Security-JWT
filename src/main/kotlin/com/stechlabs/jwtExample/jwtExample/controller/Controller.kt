@@ -1,5 +1,6 @@
 package com.stechlabs.jwtExample.jwtExample.controller
 
+import com.stechlabs.jwtExample.jwtExample.model.Content
 import com.stechlabs.jwtExample.jwtExample.model.Request
 import com.stechlabs.jwtExample.jwtExample.model.Response
 import com.stechlabs.jwtExample.jwtExample.service.MyUserDetailsService
@@ -49,12 +50,12 @@ internal class Controller {
 
 
     @RequestMapping(value = ["/upload"], method = [RequestMethod.POST])
-     fun fileUpload(@RequestParam("file") file: MultipartFile): ResponseEntity<String> {
+     fun fileUpload(@RequestParam("file") file: MultipartFile): ResponseEntity<Content> {
         return try {
-            uploadService.uploadFile(file)
-            ResponseEntity.ok("Uploaded Sucessful")
+            val content=uploadService.uploadFile(file)
+            ResponseEntity.ok(Content(content = content))
         }catch (e:Exception){
-            ResponseEntity.ok("Uploaded Unsuccessful")
+            ResponseEntity.ok(Content(content = "Not Available"))
         }
     }
 }
